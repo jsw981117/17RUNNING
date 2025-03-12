@@ -370,8 +370,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score : 00000'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7343578b40e6f8f4499a597db16947e3, type: 2}
+  m_sharedMaterial: {fileID: -8597591971218907326, guid: 7343578b40e6f8f4499a597db16947e3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
