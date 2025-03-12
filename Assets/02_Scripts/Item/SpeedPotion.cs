@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedPotion : MonoBehaviour
+public class SpeedPotion : Potion
 {
-    // Start is called before the first frame update
+
+    float sp = 3f; // 추가 속도 
     void Start()
     {
         

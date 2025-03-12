@@ -4,12 +4,12 @@ using UnityEngine;
 
 interface IEffect
 {
-    public void Use();
+    public void  Use();
 }
 public class Potion : MonoBehaviour,IEffect
 {
   
-    public void Use()
+    public virtual void Use()
     {
        
     }

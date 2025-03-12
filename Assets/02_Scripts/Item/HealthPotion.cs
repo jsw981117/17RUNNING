@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPotion : MonoBehaviour
+public class HealthPotion : Potion
 {
-    // Start is called before the first frame update
+
+    float heatlh = 50; // È¸º¹·®
+
     void Start()
     {
         
