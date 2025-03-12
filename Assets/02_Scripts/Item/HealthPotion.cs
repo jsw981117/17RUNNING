@@ -5,16 +5,19 @@ using UnityEngine;
 public class HealthPotion : Potion
 {
 
-    float heatlh = 50; // ȸ����
+    float heatlh = 50; // 회복량
 
-    void Start()
+
+    public override void Use()
     {
+        // Player.hp += health;
         
+        /*if(Player.hp> Player.MaxHp)
+        {
+            Playerhp = Player.MaxHp;
+        }*/
+
+        // 체력 비례 스피드?
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

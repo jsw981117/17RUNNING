@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpeedPotion : Potion
 {
 
-    float sp = 3f; // Ãß°¡ ¼Óµµ 
+    float sp = 3f; // ì¶”ê°€ ì†ë„ 
     void Start()
     {
         

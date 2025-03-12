@@ -11,7 +11,7 @@ public class Potion : MonoBehaviour,IEffect
   
     public virtual void Use()
     {
-       
+      
     }
 
     // Start is called before the first frame update
