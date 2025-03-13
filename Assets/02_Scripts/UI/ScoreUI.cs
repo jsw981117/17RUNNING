@@ -2,25 +2,18 @@ using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {
-    public static ScoreUI Instance;  // ½Ì±ÛÅÏ ÆĞÅÏ Àû¿ë
-    private int score = 0;  // Á¡¼ö º¯¼ö
-    private float timer = 0f;  // ½Ã°£ ÃøÁ¤À» À§ÇÑ º¯¼ö
-
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
+    private int score = 0;  // ì ìˆ˜ ë³€ìˆ˜
+    private float timer = 0f;  // ì‹œê°„ ì¸¡ì •ì„ ìœ„í•œ ë³€ìˆ˜
 
     private void Update()
     {
-        timer += Time.deltaTime;  // ½Ã°£ ´©Àû
+        timer += Time.deltaTime;  // ì‹œê°„ ëˆ„ì 
 
-        if (timer >= 0.05f)  // 1ÃÊ¸¶´Ù Á¡¼ö Áõ°¡
+        if (timer >= 0.05f)  
         {
-            score += 1;  // Á¡¼ö Áõ°¡ (ÃÊ´ç 10Á¡)
-            UIManager.Instance.UpdateScoreUI(score);  // UI ¾÷µ¥ÀÌÆ®
-            timer = 0f;  // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+            score += 1;
+            UIManager.Instance.UpdateScoreUI(score);  // UI ì—…ë°ì´íŠ¸
+            timer = 0f;  // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
         }
     }
 }
