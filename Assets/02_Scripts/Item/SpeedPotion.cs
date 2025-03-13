@@ -16,13 +16,9 @@ public class SpeedPotion : Potion
         originSpeed = PyManager.Instance.Ppy.speed;
         Debug.Log(originSpeed);
         PyManager.Instance.Ppy.SpeedUp();
-        StartCoroutine(Accel());
+     
     
     }
 
-    IEnumerator Accel()
-    {
-        yield return waitTime;
-        PyManager.Instance.Ppy.AfterSpeedUp();
-    }
+
 }
