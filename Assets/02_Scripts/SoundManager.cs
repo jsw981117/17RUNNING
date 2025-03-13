@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        PlayBGM(BGM.TITLE);
+        //PlayBGM(BGM.TITLE);
     }
 
     // BGM
