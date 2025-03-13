@@ -98,7 +98,7 @@ public class ChunkLoadManager : MonoBehaviour
 
         if (chunkLevel.chunkPrefabs.Length < poolSize)
         {
-            Debug.LogWarning($"ChunkLoadManager: Level {level} has only {chunkLevel.chunkPrefabs.Length} prefabs but pool size is {poolSize}. 청크가 모자랍니다.");
+            Debug.LogWarning("청크 부족");
         }
 
         for (int i = 0; i < chunkLevel.chunkPrefabs.Length; i++)
@@ -116,8 +116,6 @@ public class ChunkLoadManager : MonoBehaviour
         }
 
         currentPrefabIndex = 0;
-
-        Debug.Log($"ChunkLoadManager: Initialized prefab indices for level {level}, total {prefabIndices.Count} prefabs");
     }
 
     /// <summary>
@@ -157,7 +155,6 @@ public class ChunkLoadManager : MonoBehaviour
         ChunkLevel currentChunkLevel = chunkLevels[currentLevel];
         if (currentChunkLevel.chunkPrefabs == null || currentChunkLevel.chunkPrefabs.Length == 0)
         {
-            Debug.LogError($"ChunkLoadManager: No chunk prefabs defined for level {currentLevel}");
             return;
         }
 
@@ -183,8 +180,6 @@ public class ChunkLoadManager : MonoBehaviour
 
             chunkLevelMap[chunk] = currentLevel;
         }
-
-        Debug.Log($"ChunkLoadManager: Created pool for level {currentLevel} with {chunkPool.Count} chunks (one of each prefab)");
     }
 
     /// <summary>
@@ -196,14 +191,12 @@ public class ChunkLoadManager : MonoBehaviour
     {
         if (level < 0 || level >= chunkLevels.Count)
         {
-            Debug.LogError($"ChunkLoadManager: Invalid level {level}");
             return null;
         }
 
         ChunkLevel chunkLevel = chunkLevels[level];
         if (chunkLevel.chunkPrefabs == null || chunkLevel.chunkPrefabs.Length == 0)
         {
-            Debug.LogError($"ChunkLoadManager: No chunk prefabs defined for level {level}");
             return null;
         }
 
@@ -282,16 +275,28 @@ public class ChunkLoadManager : MonoBehaviour
         chunk.SetActive(false);
         activeChunks.Remove(chunk);
 
+        // 현재 레벨과 다른 청크는 파괴
         if (!chunkLevelMap.ContainsKey(chunk) || chunkLevelMap[chunk] != currentLevel)
         {
             Destroy(chunk);
-            GameObject newChunk = CreateChunkForLevel(currentLevel);
-            newChunk.SetActive(false);
-            chunkPool.Add(newChunk);
         }
         else
         {
+            // 같은 레벨의 청크는 그대로 풀에 반환
             chunkPool.Add(chunk);
+        }
+
+        // 여기서 풀에 있는 청크들을 섞는 로직 추가
+        if (chunkPool.Count > 1)
+        {
+            // 풀에 있는 청크들 섞기
+            for (int i = 0; i < chunkPool.Count; i++)
+            {
+                GameObject temp = chunkPool[i];
+                int randomIndex = Random.Range(0, chunkPool.Count);
+                chunkPool[i] = chunkPool[randomIndex];
+                chunkPool[randomIndex] = temp;
+            }
         }
     }
 

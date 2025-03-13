@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText; // 점수 UI
     public HealthUI healthUI; // HealthUI 참조
+    public PauseUI pauseUI;
 
     private void Awake()
     {
@@ -24,6 +25,15 @@ public class UIManager : MonoBehaviour
         if (healthUI != null)
         {
             healthUI.UpdateHealth(health); // HealthUI 스크립트에서 체력 UI 업데이트 실행
+        }
+    }
+
+    public void UpdatePauseUI(bool isPaused)
+    {
+        // Pause UI가 변경될 때 UI 업데이트 수행
+        if (pauseUI != null)
+        {
+            pauseUI.pausePanel.SetActive(isPaused);
         }
     }
 }
