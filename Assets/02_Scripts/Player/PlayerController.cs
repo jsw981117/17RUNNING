@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-//ÇÃ·¹ÀÌ¾î »óÅÂ. Á¡ÇÁÁßÀÎÁö ½½¶óÀÌµå ÁßÀÎÁö, ´Ş¸®´Â ÁßÀÎÁö.
+//í”Œë ˆì´ì–´ ìƒíƒœ. ì í”„ì¤‘ì¸ì§€ ìŠ¬ë¼ì´ë“œ ì¤‘ì¸ì§€, ë‹¬ë¦¬ëŠ” ì¤‘ì¸ì§€.
 public enum PlayerMotionState
 {
     Run,
@@ -13,54 +13,54 @@ public enum PlayerMotionState
 }
 
 
-//»ç¿ëÀÚ ÀÔ·Â Ã³¸®, ÇÃ·¹ÀÌ¾î ÁÂ¿ì ÀÌµ¿ µîÀÇ µ¿ÀÛ Ã³¸®.
+//ì‚¬ìš©ì ì…ë ¥ ì²˜ë¦¬, í”Œë ˆì´ì–´ ì¢Œìš° ì´ë™ ë“±ì˜ ë™ì‘ ì²˜ë¦¬.
 public class PlayerController : MonoBehaviour
 {
-    //ÀÌµ¿ ¼Óµµ
+    //ì´ë™ ì†ë„
     [HideInInspector] public float moveSpeed;
-    //¾Æ·¡ ÇÊµå¸¦ ÅëÇØ ÀÌµ¿ ¼Óµµ¸¦ Á¶Àı
+    //ì•„ë˜ í•„ë“œë¥¼ í†µí•´ ì´ë™ ì†ë„ë¥¼ ì¡°ì ˆ
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private float speedBoostMultiplier;
 
-    //ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ. Á¡ÇÁÁßÀÎÁö, ½½¶óÀÌµåÁßÀÎÁö.
+    //í”Œë ˆì´ì–´ì˜ ìƒíƒœ. ì í”„ì¤‘ì¸ì§€, ìŠ¬ë¼ì´ë“œì¤‘ì¸ì§€.
     public PlayerMotionState motionState;
 
-    //Áö±İ ´Ş¸®´Â ·¹ÀÎ. ¿ŞÂÊ < Áß¾Ó < ¿À¸¥ÂÊ, Áß¾Ó = 0
+    //ì§€ê¸ˆ ë‹¬ë¦¬ëŠ” ë ˆì¸. ì™¼ìª½ < ì¤‘ì•™ < ì˜¤ë¥¸ìª½, ì¤‘ì•™ = 0
     public int lane = 0;
 
 
-    //·¹ÀÎ °£ °£°İ
+    //ë ˆì¸ ê°„ ê°„ê²©
     public float laneDistance;
-    //·¹ÀÎ ÀÌµ¿¿¡ °É¸®´Â ½Ã°£
+    //ë ˆì¸ ì´ë™ì— ê±¸ë¦¬ëŠ” ì‹œê°„
     public float laneChangeTime;
-    //ÀÌµ¿ ÈÄ Àá½Ã ÀÌµ¿À» ¸·±â
+    //ì´ë™ í›„ ì ì‹œ ì´ë™ì„ ë§‰ê¸°
     public float laneChangeBlockTime;
     private bool canChangeLane = true;
 
-    //Á¡ÇÁ °ü·Ã
+    //ì í”„ ê´€ë ¨
     public LayerMask groundLayerMask;
     public bool canJump;
     public float jumpMaxAlt;
     public float holdTimeAtMaxAlt;
     [SerializeField][ReadOnly(true)] private float jumpPower;
 
-    //½½¶óÀÌµå °ü·Ã
+    //ìŠ¬ë¼ì´ë“œ ê´€ë ¨
     private bool isSliding;
 
 
     Rigidbody _rigidbody;
 
-    //ÇÃ·¹ÀÌ¾î rigidbody , Áß·Â°¡¼Óµµ ¼öÁ¤ÇÏ¸é ÀÌ ÇÔ¼ö¸¦ È£Ãâ.
+    //í”Œë ˆì´ì–´ rigidbody , ì¤‘ë ¥ê°€ì†ë„ ìˆ˜ì •í•˜ë©´ ì´ í•¨ìˆ˜ë¥¼ í˜¸ì¶œ.
     private void CalculateJumpPower()
     {
         float m = _rigidbody.mass;
         float g = Physics.gravity.magnitude;
-        //À§Ä¡¿¡³ÊÁö: Ep = mgh
-        //¿¡³ÊÁö != Èû
+        //ìœ„ì¹˜ì—ë„ˆì§€: Ep = mgh
+        //ì—ë„ˆì§€ != í˜
         //impulse, imp = N*s
         // imp = m * a * s = m * v
-        //À§Ä¡¿¡³ÊÁö-¿îµ¿¿¡³ÊÁö º¸Á¸¹ıÄ¢ -> v = sqrt(2gh
-        //Áú·® mÀÎ ¹°Ã¼°¡ °íµµ h ¿¡ µµ´ŞÇÏ±â À§ÇØ ÇÊ¿äÇÑ impulse
+        //ìœ„ì¹˜ì—ë„ˆì§€-ìš´ë™ì—ë„ˆì§€ ë³´ì¡´ë²•ì¹™ -> v = sqrt(2gh
+        //ì§ˆëŸ‰ mì¸ ë¬¼ì²´ê°€ ê³ ë„ h ì— ë„ë‹¬í•˜ê¸° ìœ„í•´ í•„ìš”í•œ impulse
         jumpPower = m * Mathf.Sqrt(2 * g * jumpMaxAlt);
     }
 
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //¶¥¿¡ ºÙ¾îÀÖÀ¸¸é
+        //ë•…ì— ë¶™ì–´ìˆìœ¼ë©´
         if (CheckGround())
         {
             if (isSliding)
@@ -118,12 +118,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    #region ·¹ÀÎ º¯°æ °ü·Ã ·ÎÁ÷
+    #region ë ˆì¸ ë³€ê²½ ê´€ë ¨ ë¡œì§
     void MoveLane(int direction)
     {
-        //·¹ÀÎ °¹¼ö´Â 3À¸·Î.
+        //ë ˆì¸ ê°¯ìˆ˜ëŠ” 3ìœ¼ë¡œ.
 
-        //¿ŞÂÊ ³¡¿¡¼­ ¿ŞÂÊ ÀÌµ¿, ¿À¸¥ÂÊ ³¡¿¡¼­ ¿À¸¥ÂÊ ÀÌµ¿ ½Ãµµ½Ã return
+        //ì™¼ìª½ ëì—ì„œ ì™¼ìª½ ì´ë™, ì˜¤ë¥¸ìª½ ëì—ì„œ ì˜¤ë¥¸ìª½ ì´ë™ ì‹œë„ì‹œ return
         if (lane == -1)
         {
             if (direction == -1) return;
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
             if (direction == 1) return;
         }
 
-        //±× ¿Ü °æ¿ì ·¹ÀÎ º¯°æ.
+        //ê·¸ ì™¸ ê²½ìš° ë ˆì¸ ë³€ê²½.
         if (canChangeLane)
         {
             lane += direction;
@@ -152,22 +152,23 @@ public class PlayerController : MonoBehaviour
     IEnumerator MoveLaneCoroutine(int direction)
     {
         float elapsed = 0f;
-        Vector3 startPos = transform.position;
 
-        // lane * ¹ú¸®´Â °Å¸® => ¸ñÇ¥ À§Ä¡
+        // lane * ë²Œë¦¬ëŠ” ê±°ë¦¬ => ëª©í‘œ ìœ„ì¹˜
         //float target = lane * laneDistance;
 
         float spd = laneDistance / laneChangeTime;
         while (elapsed < laneChangeTime)
         {
-            //ÀÌ ·ÎÁ÷ ¼öÁ¤ ÇÊ¿ä
+            //ì´ ë¡œì§ ìˆ˜ì • í•„ìš”
             transform.position += transform.right * spd * direction * Time.deltaTime;
             elapsed += Time.deltaTime;
             yield return null;
         }
         Vector3 vector = transform.right * laneDistance * lane;
-        //vector = transform.position * transform.forward;
-        //transform.position = vector;
+        vector += Vector3.Scale(transform.forward, transform.position);
+        vector += Vector3.Scale(transform.up, transform.position);
+
+        transform.position = vector;
     }
     #endregion;
 
@@ -183,7 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started && motionState != PlayerMotionState.Jump)
         {
-            Debug.Log("Á¡ÇÁ");
+            Debug.Log("ì í”„");
             Jump();
         }
     }
