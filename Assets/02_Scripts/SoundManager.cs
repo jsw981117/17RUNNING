@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BGM     // BGM Á¾·ù
+
+// BGM ì¢…ë¥˜
+public enum BGM
 {
     TITLE,
     GAME
 }
 
-public enum SFX     // SFX Á¾·ù
+// SFX ì¢…ë¥˜
+public enum SFX
 {
-    // ÇÃ·¹ÀÌ¾î
-    JUMP,       // Á¡ÇÁ
-    SLIDE,      // ½½¶óÀÌµå
-    ITEM,       // ¾ÆÀÌÅÛ ¸Ô¾úÀ» ¶§
+    JUMP,       // ì í”„
+    SLIDE,      // ìŠ¬ë¼ì´ë“œ
+    CRASH,      // ì¥ì• ë¬¼ê³¼ ì¶©ëŒ
+    ITEM,       // ì•„ì´í…œ ë¨¹ì—ˆì„ ë•Œ
 
-    // ÀüÃ¼ °ÔÀÓ
-    BUTTON,     // ¹öÆ° UI Å¬¸¯
-    GAMECLEAR,  // °ÔÀÓ Å¬¸®¾î ½Ã
-    GAMEOVER,   // °ÔÀÓ ¿À¹ö ½Ã
+    BUTTON,     // ë²„íŠ¼ UI í´ë¦­
+    GAMECLEAR,  // ê²Œì„ í´ë¦¬ì–´ ì‹œ
+    GAMEOVER,   // ê²Œì„ ì˜¤ë²„ ì‹œ
 }
 
 
@@ -26,13 +28,13 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
-    [Header("Audioclips Array")]
-    [SerializeField] AudioClip[] bgms;
-    [SerializeField] AudioClip[] sfxs;
+    [Header("AudioClips List")]
+    [SerializeField] AudioClip[] BGMList;
+    [SerializeField] AudioClip[] SFXList;
 
-    [Header("Now Playing")]
-    [SerializeField] AudioSource audioBgm;
-    [SerializeField] AudioSource audioSfx;
+    [Header("Play Clips")]
+    [SerializeField] AudioSource audioBGM;
+    [SerializeField] AudioSource audioSFX;
 
 
     private void Awake()
@@ -46,24 +48,36 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        //PlayBGM(BGM.TITLE);
+    }
 
-    // BGM Àç»ı, Á¤Áö
+    // BGM
     public void PlayBGM(BGM bgmIdx)
     {
-        audioBgm.clip = bgms[(int)bgmIdx];
-        audioBgm.Play();
+        audioBGM.clip = BGMList[(int)bgmIdx];
+        audioBGM.Play();
     }
 
     public void StopBGM()
     {
-        audioBgm.Stop();
+        audioBGM.Stop();
     }
 
-
-    // SFX Àç»ı
+    // SFX
     public void PlaySFX(SFX sfxIdx)
     {
-        audioSfx.PlayOneShot(sfxs[(int)sfxIdx]);
+        if ((int)sfxIdx == 1)       // ìŠ¬ë¼ì´ë“œí•  ë•Œ
+        {
+            audioSFX.clip = SFXList[(int)sfxIdx];
+            audioSFX.Play();
+        }
+        else
+            audioSFX.PlayOneShot(SFXList[(int)sfxIdx]);
+    }
+    public void StopSFX()
+    {
+        audioSFX.Stop();
     }
 }
-

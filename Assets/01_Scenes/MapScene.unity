@@ -189,14 +189,18 @@ MonoBehaviour:
     - {fileID: 4358783055393235663, guid: b5bdb2f96538b3845b491521043c1adf, type: 3}
     - {fileID: 4358783055393235663, guid: bd7cf06489dba534c80d751910d40d77, type: 3}
     - {fileID: 4358783055393235663, guid: 634bc1d3cc8f68641a564ffe08c4bd05, type: 3}
+    - {fileID: 4358783055393235663, guid: 938f9b52de09eda45a125b0d9707be2e, type: 3}
+    - {fileID: 4358783055393235663, guid: cdd77f3e6e2389d41909565bfca7eca2, type: 3}
+    - {fileID: 4358783055393235663, guid: 19a3b73365244704da311784702d3da3, type: 3}
   - chunkPrefabs:
     - {fileID: 4358783055393235663, guid: 938f9b52de09eda45a125b0d9707be2e, type: 3}
     - {fileID: 4358783055393235663, guid: cdd77f3e6e2389d41909565bfca7eca2, type: 3}
     - {fileID: 4358783055393235663, guid: 19a3b73365244704da311784702d3da3, type: 3}
-  poolSize: 5
+  poolSize: 3
   target: {fileID: 84082356}
   currentLevel: 0
   defaultChunkLength: 100
+  recycleDistance: 100
 --- !u!4 &997984609
 Transform:
   m_ObjectHideFlags: 0
