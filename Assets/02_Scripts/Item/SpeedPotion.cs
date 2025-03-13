@@ -16,4 +16,9 @@ public class SpeedPotion : Potion
     {
         
     }
+
+    public override void Use(GameObject game)
+    {
+        Debug.Log("스피드 포션입니다.");
+    }
 }
