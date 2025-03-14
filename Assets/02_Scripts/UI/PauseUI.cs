@@ -4,20 +4,21 @@ using System.Collections;
 
 public class PauseUI : MonoBehaviour
 {
-    public GameObject pausePanel; // 정지 UI 패널
-    public Button pauseButton; // 정지 버튼
-    public Button playButton; // 플레이 버튼
-    public Image countdownImage; // 카운트다운 이미지 UI
-    public Sprite[] countdownSprites; // 3, 2, 1 숫자 이미지 배열
+    public GameObject pausePanel;
+    public Button pauseButton;
+    public Button playButton;
+    public Image countdownImage;
+    public Sprite[] countdownSprites;
 
-    private bool isPaused = false; // 정지 여부
+    private bool isPaused = false;
+    private Image pausePanelImage;
 
     private void Start()
     {
-        pausePanel.SetActive(false); // 시작 시 정지 UI 숨김
-        countdownImage.gameObject.SetActive(false); // 카운트다운 UI 숨김
+        pausePanelImage = pausePanel.GetComponent<Image>();
+        pausePanel.SetActive(false);
+        countdownImage.gameObject.SetActive(false);
 
-        // 버튼 이벤트 등록
         pauseButton.onClick.AddListener(TogglePause);
         playButton.onClick.AddListener(StartCountdown);
     }
@@ -26,7 +27,17 @@ public class PauseUI : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
-        pausePanel.SetActive(isPaused);
+
+        if (isPaused)
+        {
+            pausePanel.SetActive(true);
+            SetPanelTransparency(0.5f);
+            playButton.gameObject.SetActive(true); // 정지 시 시작 버튼 활성화
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+        }
     }
 
     public void StartCountdown()
@@ -36,16 +47,17 @@ public class PauseUI : MonoBehaviour
 
     private IEnumerator CountdownCoroutine()
     {
-        pausePanel.SetActive(false); // 정지 UI 숨기기
-        countdownImage.gameObject.SetActive(true); // 카운트다운 UI 활성화
+        SetPanelTransparency(0.5f);
+        countdownImage.gameObject.SetActive(true);
+        playButton.gameObject.SetActive(false); // 카운트다운 시작 시 버튼 숨김
 
         for (int i = 0; i < countdownSprites.Length; i++)
         {
-            countdownImage.sprite = countdownSprites[i]; // 이미지 변경
-            yield return new WaitForSecondsRealtime(1f); // Time.timeScale = 0f 상태에서도 동작
+            countdownImage.sprite = countdownSprites[i];
+            yield return new WaitForSecondsRealtime(1f);
         }
 
-        countdownImage.gameObject.SetActive(false); // 카운트다운 UI 숨김
+        countdownImage.gameObject.SetActive(false);
         ResumeGame();
     }
 
@@ -54,5 +66,17 @@ public class PauseUI : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         UIManager.Instance.UpdatePauseUI(false);
+        pausePanel.SetActive(false);
+        playButton.gameObject.SetActive(false); // 게임 재개 시 버튼 숨김
+    }
+
+    private void SetPanelTransparency(float alpha)
+    {
+        if (pausePanelImage != null)
+        {
+            Color color = pausePanelImage.color;
+            color.a = alpha;
+            pausePanelImage.color = color;
+        }
     }
 }
