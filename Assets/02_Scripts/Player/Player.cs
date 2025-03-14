@@ -8,13 +8,13 @@ public class Player : MonoBehaviour
 
 
     public PlayerController controller;
-    public PlayerHealth condition;
+    public PlayerCondition condition;
 
     private void Start()
     {
         PlayerManager.Instance.Player = this;
         controller = GetComponent<PlayerController>();
-        condition = GetComponent<PlayerHealth>();
+        condition = GetComponent<PlayerCondition>();
     }
 }
  
