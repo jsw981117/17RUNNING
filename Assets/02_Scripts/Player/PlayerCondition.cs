@@ -4,7 +4,9 @@ public class PlayerCondition : MonoBehaviour
 {
     public int maxHealth = 3; // 최대 체력
     public int currentHealth; // 현재 체력
-
+    float accel = 5f;
+    float originSpeed;
+    bool isAccel = false;
     private void Awake()
     {
         PlayerManager.Instance.PlayerCondition = this;
@@ -12,7 +14,7 @@ public class PlayerCondition : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        UIManager.Instance.UpdateHealthUI(currentHealth); // 초기 체력 UI 설정
+        // UIManager.Instance.UpdateHealthUI(currentHealth); // 초기 체력 UI 설정
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,9 +22,8 @@ public class PlayerCondition : MonoBehaviour
         Potion potion = other.GetComponent<Potion>();
         if (potion != null)
         {
-
             Destroy(other.gameObject);
-            potion.Use(gameObject);
+            potion.Use(gameObject); // 다형성 포션 호출 (스피드업, 체력)
         }
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
@@ -71,4 +72,25 @@ public class PlayerCondition : MonoBehaviour
         }
     }
 
+    public void SpeedUp()
+    {
+        if (isAccel == false) // 가속이 아닐때 기본속도로 저장
+        {
+            isAccel = true; // 가속중
+            originSpeed = PlayerManager.Instance.PlayerController.moveSpeed;
+            PlayerManager.Instance.PlayerController.moveSpeed += accel; // 중첩 해결 어떻게?
+        }
+       
+        CancelInvoke("AfterSpeedUp"); // 포션 배치가 연속일때 마지막포션 기준으로 3초 적용
+        Debug.Log("가속적용" + PlayerManager.Instance.PlayerController.moveSpeed);
+        Invoke("AfterSpeedUp", 3f);
+    }
+
+    public void AfterSpeedUp()
+    {
+        
+        PlayerManager.Instance.PlayerController.moveSpeed = originSpeed; // 3초의 가속이 끝나면 기본속도로 복구
+        Debug.Log("원래속도복구" + PlayerManager.Instance.PlayerController.moveSpeed);
+        isAccel = false; 
+    }
 }
