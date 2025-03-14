@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerCondition : MonoBehaviour
 {
     public int maxHealth = 3; // 최대 체력
-    private int currentHealth; // 현재 체력
+    public int currentHealth; // 현재 체력
 
+    private void Awake()
+    {
+        PlayerManager.Instance.PlayerCondition = this;
+    }
     private void Start()
     {
         currentHealth = maxHealth;
@@ -13,7 +17,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Potion potion = other.GetComponent<Potion>();
+        if (potion != null)
+        {
 
+            Destroy(other.gameObject);
+            potion.Use(gameObject);
+        }
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
             TakeDamage(1);
@@ -50,4 +60,15 @@ public class PlayerHealth : MonoBehaviour
         UIManager.Instance.ShowGameOverUI();
         Destroy(gameObject);
     }
+
+
+    public void Heal() // 생명력 회복 
+    {
+        currentHealth++;
+        if (currentHealth> maxHealth) // 생명력 보정 3개이상이면 3으로 유지
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
 }

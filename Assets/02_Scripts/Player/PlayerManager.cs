@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-//ÇÃ·¹ÀÌ¾î¿¡ Á¢±ÙÀ» µµ¿ÍÁÖ´Â ÇÃ·¹ÀÌ¾î ¸Å´ÏÀú
+//í”Œë ˆì´ì–´ì— ì ‘ê·¼ì„ ë„ì™€ì£¼ëŠ” í”Œë ˆì´ì–´ ë§¤ë‹ˆì €
 public class PlayerManager : MonoBehaviour
 {
     private static PlayerManager _instance;
@@ -25,6 +25,19 @@ public class PlayerManager : MonoBehaviour
         set { _player = value; }
     }
 
+    private PlayerController _playerController;
+    public PlayerController PlayerController
+    {
+        get { return _playerController; }
+        set { _playerController = value; }
+    }
+
+    public PlayerCondition _playerCondition;
+    public PlayerCondition PlayerCondition
+    {
+        get { return _playerCondition; }
+        set { _playerCondition = value; }
+    }
     private void Awake()
     {
         if (_instance == null)
