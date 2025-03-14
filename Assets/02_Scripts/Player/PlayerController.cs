@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        PlayerManager.Instance.PlayerController = this;
     }
     private void Start()
     {

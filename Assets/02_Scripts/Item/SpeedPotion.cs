@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpeedPotion : Potion
 {
 
-    float sp = 3f; // 추가 속도 
-    void Start()
+    public override void Use(GameObject game)
     {
-        
+
+        PlayerManager.Instance.PlayerCondition.SpeedUp();
+    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
