@@ -7,13 +7,19 @@ public class ScoreUI : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;  // 시간 누적
+        // UIManager에서 게임 오버 상태 확인
+        if (UIManager.Instance != null && UIManager.Instance.isGameOver)
+        {
+            return; // 게임 오버 시 점수 증가 중단
+        }
 
-        if (timer >= 0.05f)  
+        timer += Time.deltaTime;
+
+        if (timer >= 0.05f)
         {
             score += 1;
-            UIManager.Instance.UpdateScoreUI(score);  // UI 업데이트
-            timer = 0f;  // 타이머 초기화
+            UIManager.Instance.UpdateScoreUI(score);
+            timer = 0f;
         }
     }
 }
