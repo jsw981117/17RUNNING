@@ -47,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log(" 플레이어 사망!");
         // 게임 오버 처리 가능 (씬 리로드, UI 표시 등)
+        UIManager.Instance.ShowGameOverUI();
         Destroy(gameObject);
     }
 }
