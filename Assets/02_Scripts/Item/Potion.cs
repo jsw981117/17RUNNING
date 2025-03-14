@@ -4,16 +4,15 @@ using UnityEngine;
 
 interface IEffect
 {
-    public void  Use();
+    public void  Use(GameObject game);
 }
-public class Potion : MonoBehaviour,IEffect
+public class Potion : MonoBehaviour, IEffect
 {
   
-    public virtual void Use()
+    public virtual void Use(GameObject game)
     {
       
     }
 
-    // Start is called before the first frame update
   
 }

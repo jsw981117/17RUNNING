@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
+        PlayerManager.Instance.PlayerController = this;
     }
     private void Start()
     {
