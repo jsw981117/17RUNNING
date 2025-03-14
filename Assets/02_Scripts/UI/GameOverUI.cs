@@ -5,11 +5,17 @@ public class GameOverUI : MonoBehaviour
 {
     public GameObject retryButton;
     public GameObject homeButton;
+    public PauseUI pauseUI;
 
     public void ShowGameOver()
     {
         retryButton.SetActive(true);
         homeButton.SetActive(true);
+
+        if (pauseUI != null && pauseUI.pauseButton != null)
+        {
+            pauseUI.pauseButton.interactable = false; // 게임 오버 시 정지 버튼 비활성화
+        }
     }
 
     public void RestartGame()
