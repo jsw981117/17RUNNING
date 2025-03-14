@@ -6,11 +6,15 @@ public class Player : MonoBehaviour
 {
     public int life;
 
-    private Rigidbody _rigidbody;
 
-    private void FixedUpdate()
+    public PlayerController controller;
+    public PlayerHealth condition;
+
+    private void Start()
     {
-        
+        PlayerManager.Instance.Player = this;
+        controller = GetComponent<PlayerController>();
+        condition = GetComponent<PlayerHealth>();
     }
 }
  
