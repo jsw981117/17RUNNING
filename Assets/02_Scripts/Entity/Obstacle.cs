@@ -14,16 +14,16 @@ public class Obstacle : MonoBehaviour, IObstacle
     [SerializeField] private bool useCenterLane = true;
     [SerializeField] private bool useRightLane = false;
 
-    // 내부적으로 사용할 레인 배열
     private int[] _lanes = new int[0];
+    private int _activeLaneCount = 0;
 
-    // 플레이어 레이어 번호
     [SerializeField] private LayerMask playerLayer;
 
     [SerializeField] private int damage = 1;
 
     [Header("Collider Settings")]
-    [SerializeField] private float laneDistance = 1.0f;
+    [SerializeField] private float laneWidth = 1.0f;
+    [SerializeField] private float laneSpacing = 0.2f;
 
     [SerializeField] private float colliderHeight = 1.0f;
     [SerializeField] private float colliderDepth = 0.5f;
@@ -90,6 +90,7 @@ public class Obstacle : MonoBehaviour, IObstacle
         }
 
         _lanes = lanesList.ToArray();
+        _activeLaneCount = lanesList.Count;
     }
 
     /// <summary>
@@ -99,32 +100,16 @@ public class Obstacle : MonoBehaviour, IObstacle
     {
         if (_lanes == null || _lanes.Length == 0)
         {
-            // 기본값: 중앙 레인
             _lanes = new int[] { 0 };
+            _activeLaneCount = 1;
             useCenterLane = true;
         }
 
-        int minLane = _lanes.Min();
-        int maxLane = _lanes.Max();
+        float totalWidth = (_activeLaneCount * laneWidth) + ((_activeLaneCount - 1) * laneSpacing);
 
-        int laneCount = maxLane - minLane + 1;
+        float centerX = 0f;
 
-        // 콜라이더 중심점 계산 (최소 레인과 최대 레인의 중간 지점)
-        float centerX = (minLane + maxLane) * laneDistance / 2f;
-
-        // 콜라이더 X축 크기 계산 (커버하는 레인 수에 비례)
-        float sizeX = laneCount * laneDistance;
-
-        // 연속되지 않은 레인이 있는 경우 (예: -1과 1만 있고 0은 없는 경우)
-        // 모든 레인을 포함하는 크기로 설정
-        if (laneCount > _lanes.Length)
-        {
-            // 모든 레인을 커버
-            sizeX = (maxLane - minLane + 1) * laneDistance;
-        }
-
-        // 콜라이더 크기 및 중심 설정
-        boxCollider.size = new Vector3(sizeX, colliderHeight, colliderDepth);
+        boxCollider.size = new Vector3(totalWidth, colliderHeight, colliderDepth);
         boxCollider.center = new Vector3(centerX, colliderYOffset, 0);
     }
 
