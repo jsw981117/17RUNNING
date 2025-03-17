@@ -38,6 +38,7 @@ public class PlayerCondition : MonoBehaviour
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
             IObstacle obstacle = other.GetComponent<IObstacle>();
+            if(!Invincibility){
             if (obstacle.lane == playerLane)
             {
                 foreach (var v in obstacle.passable)
@@ -45,12 +46,12 @@ public class PlayerCondition : MonoBehaviour
                     if (v != playerMotionState)
                     {
                         //지나갈 수 없는 상태.
-                       
                             TakeDamage(1);
                             break;
                        
                     }
                 }
+            }
             }
         }
 
