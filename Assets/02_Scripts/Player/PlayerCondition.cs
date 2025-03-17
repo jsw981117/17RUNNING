@@ -45,9 +45,10 @@ public class PlayerCondition : MonoBehaviour
                     if (v != playerMotionState)
                     {
                         //지나갈 수 없는 상태.
-                        if(!isInvincible)
+                       
                             TakeDamage(1);
-                        break;
+                            break;
+                       
                     }
                 }
             }
