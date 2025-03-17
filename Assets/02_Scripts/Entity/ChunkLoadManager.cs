@@ -64,14 +64,12 @@ public class ChunkLoadManager : MonoBehaviour
             SpawnChunk();
         }
 
-        bool recycledChunk = false;
         for (int i = activeChunks.Count - 1; i >= 0; i--)
         {
             GameObject chunk = activeChunks[i];
             if (target.position.z - chunk.transform.position.z > recycleDistance)
             {
                 RecycleSpecificChunk(chunk);
-                recycledChunk = true;
                 needToSpawnNewChunk = true;
             }
         }
