@@ -7,11 +7,26 @@ using TMPro; // TextMeshPro 사용 시 필요
 public class LoadingManager : MonoBehaviour
 {
     public Slider progressBar; // 로딩 바
-    public TextMeshProUGUI loadingText; // 로딩 텍스트
+    public TextMeshProUGUI loadingText; // 로딩 진행률 텍스트
+    public TextMeshProUGUI tipText; // 팁을 표시할 텍스트 UI
+
+    private string[] tips =
+    {
+        "Tip : Press the arrow keys to control the character's position!",
+        "Tip : If the character touches an obstacle, their health will decrease!",
+        "Tip : Items increase health and speed!"
+    };
 
     void Start()
     {
+        ShowRandomTip(); // 랜덤 팁 표시
         StartCoroutine(LoadGameScene());
+    }
+
+    void ShowRandomTip()
+    {
+        int randomIndex = Random.Range(0, tips.Length); // 0~2 사이의 랜덤 숫자 선택
+        tipText.text = tips[randomIndex]; // 선택된 팁을 UI에 표시
     }
 
     IEnumerator LoadGameScene()
@@ -25,10 +40,8 @@ public class LoadingManager : MonoBehaviour
 
         while (!operation.isDone)
         {
-            // 실제 progress 값 (0~0.9)
             float realProgress = Mathf.Clamp01(operation.progress / 0.9f);
 
-            //  fakeProgress가 realProgress보다 빨리 증가하지 않도록 설정
             if (fakeProgress < realProgress)
             {
                 fakeProgress = Mathf.Lerp(fakeProgress, realProgress, Time.deltaTime * 2f);
@@ -38,7 +51,6 @@ public class LoadingManager : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
 
-            // 최소 로딩 시간이 지나고, 실제 로딩이 끝났을 경우에만 씬 전환
             if (realProgress >= 0.9f && elapsedTime >= minLoadingTime)
             {
                 yield return new WaitForSeconds(1f);
