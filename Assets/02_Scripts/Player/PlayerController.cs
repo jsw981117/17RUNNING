@@ -191,7 +191,6 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started && motionState != PlayerMotionState.Jump)
         {
-            Debug.Log("점프");
             Jump();
         }
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8008350621429750431}
   m_Layer: 0
   m_Name: Obstacle_Slide01
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,9 @@ MonoBehaviour:
   useLeftLane: 0
   useCenterLane: 1
   useRightLane: 0
+  leftLanePosition: -4
+  centerLanePosition: 0
+  rightLanePosition: 4
   playerLayer:
     serializedVersion: 2
     m_Bits: 64

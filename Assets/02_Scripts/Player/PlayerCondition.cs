@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerCondition : MonoBehaviour
@@ -6,12 +8,17 @@ public class PlayerCondition : MonoBehaviour
     public int currentHealth; // 현재 체력
     float accel = 5f;
     float originSpeed;
-    bool isAccel = false;
-
+    bool isAccel = false; // 가속중인가?
+    public bool isInvincible = false; //무적효과인가?
+    bool isCorotuine = false;
+    Color playerColor;
+    
     int playerLane { get => PlayerManager.Instance.PlayerController.lane; }
     PlayerMotionState playerMotionState { get => PlayerManager.Instance.PlayerController.motionState; }
     private void Awake()
     {
+      
+        playerColor = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
         PlayerManager.Instance.PlayerCondition = this;
     }
     private void Start()
@@ -31,6 +38,7 @@ public class PlayerCondition : MonoBehaviour
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
             IObstacle obstacle = other.GetComponent<IObstacle>();
+            if(!Invincibility){
             if (obstacle.lane == playerLane)
             {
                 foreach (var v in obstacle.passable)
@@ -38,12 +46,19 @@ public class PlayerCondition : MonoBehaviour
                     if (v != playerMotionState)
                     {
                         //지나갈 수 없는 상태.
-                        TakeDamage(1);
-                        break;
+                            TakeDamage(1);
+                            break;
+                       
                     }
                 }
             }
+            }
         }
+
+       /* if (other.gameObject.CompareTag("Enemy"))
+        {
+            Die();
+        }*/
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -51,7 +66,8 @@ public class PlayerCondition : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            TakeDamage(1);
+            if (!isInvincible)
+                TakeDamage(1);
         }
     }
 
@@ -92,12 +108,23 @@ public class PlayerCondition : MonoBehaviour
         if (isAccel == false) // 가속이 아닐때 기본속도로 저장
         {
             isAccel = true; // 가속중
+            isInvincible = true;
             originSpeed = PlayerManager.Instance.PlayerController.moveSpeed;
             PlayerManager.Instance.PlayerController.moveSpeed += accel; // 중첩 해결 어떻게?
+           
         }
-       
+
+        //무적효과
+        
         CancelInvoke("AfterSpeedUp"); // 포션 배치가 연속일때 마지막포션 기준으로 3초 적용
+
+        if (!isCorotuine)
+        {
+            isCorotuine = true;
+            StartCoroutine(Invincibility());
+        }
         Debug.Log("가속적용" + PlayerManager.Instance.PlayerController.moveSpeed);
+      
         Invoke("AfterSpeedUp", 3f);
     }
 
@@ -106,6 +133,33 @@ public class PlayerCondition : MonoBehaviour
         
         PlayerManager.Instance.PlayerController.moveSpeed = originSpeed; // 3초의 가속이 끝나면 기본속도로 복구
         Debug.Log("원래속도복구" + PlayerManager.Instance.PlayerController.moveSpeed);
-        isAccel = false; 
+        isAccel = false;
+        isInvincible = false;
+    }
+
+    IEnumerator Invincibility()
+    {
+    
+        // 주의 : Rendering Mode를 Transparent로 바꿀것
+        bool isAlpha = false; // 투명도 체크
+
+        float time = 0f;
+        while (isInvincible)
+        {
+            if (isAlpha)
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
+                isAlpha = false;
+            }
+            else
+            {
+                gameObject.GetComponentInChildren<MeshRenderer>().material.color = playerColor;
+                isAlpha = true; 
+            }
+          
+            yield return new WaitForSeconds(0.2f);
+        }
+        gameObject.GetComponentInChildren<MeshRenderer>().material.color = playerColor; // 깜빡임이 끝나면 원래색으로
+        isCorotuine = false;
     }
 }
