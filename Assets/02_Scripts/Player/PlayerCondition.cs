@@ -93,7 +93,6 @@ public class PlayerCondition : MonoBehaviour
         SoundManager.instance.PlaySFX(SFX.GAMEOVER);
         // 게임 오버 처리 가능 (씬 리로드, UI 표시 등)
         UIManager.Instance.ShowGameOverUI();
-        Destroy(gameObject);
     }
 
 
@@ -104,6 +103,7 @@ public class PlayerCondition : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        UIManager.Instance.UpdateHealthUI(currentHealth);
     }
 
     public void SpeedUp()
