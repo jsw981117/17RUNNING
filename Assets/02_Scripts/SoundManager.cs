@@ -19,7 +19,7 @@ public enum SFX
     ITEM,       // 아이템 먹었을 때
 
     BUTTON,     // 버튼 UI 클릭
-    GAMECLEAR,  // 게임 클리어 시
+    ACHIEVED,   // 업적 달성 시
     GAMEOVER,   // 게임 오버 시
 }
 
@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        //PlayBGM(BGM.TITLE);
+        PlayBGM(BGM.TITLE);
     }
 
     // BGM
