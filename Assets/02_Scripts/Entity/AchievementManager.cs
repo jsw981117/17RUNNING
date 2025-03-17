@@ -55,6 +55,8 @@ public class AchievementManager : MonoBehaviour
     // 게임 처음 시작하면 리스트 추가 + 저장 + 스타트 업적 달성. 재시작하면 로드만
     void Start()
     {
+        DeleteData();       // test
+
         string jsonPath = Application.persistentDataPath + "/AchievementData.txt";
         if (File.Exists(jsonPath))
         {
@@ -66,16 +68,18 @@ public class AchievementManager : MonoBehaviour
             SaveAchievementData();
         }
 
+        // test
         Debug.Log(Application.persistentDataPath);
-        Achieve(0);     // test
+        Achieve(0);
     }
 
     // 업적 리스트 추가
     void AddAchievenments() 
     {
-        achievementData.Add(new Achievement("게임 스타트", "게임을 처음 시작했다.", false));
-        achievementData.Add(new Achievement("장애물", "장애물에 처음 부딪혔다.", false));
-        achievementData.Add(new Achievement("500", "점수 500점을 돌파했다.", false));
+        achievementData.Add(new Achievement("Beginner", "Play the game for the first time.", false));   // 처음 시작
+        achievementData.Add(new Achievement("Crash!", "First collision with an obstacle", false));      // 장애물 충돌
+        achievementData.Add(new Achievement("Good Runner", "Earn 500 points.", false));               // 점수
+        achievementData.Add(new Achievement("Item Collector", "Obtain Items 5 Times.", false));         // 아이템 획득
     }
 
     // 업적 달성했을 때. 이미 달성해봤다면 패스
@@ -123,5 +127,13 @@ public class AchievementManager : MonoBehaviour
         achievementData = data.achievementData;
 
         Debug.Log("로드 완료.\n" + loadData);
+    }
+
+    // TEST METHOD
+    void DeleteData()
+    {
+        string jsonData = Application.persistentDataPath + "/AchievementData.txt";
+        if (File.Exists(jsonData))
+            File.Delete(jsonData);
     }
 }

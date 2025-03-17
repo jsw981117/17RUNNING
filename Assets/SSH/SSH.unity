@@ -364,7 +364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DescriptionDescriptd
+  m_text: DescriptionDescriptionDescription
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 589de235d2aeb874081becade69fa458, type: 2}
   m_sharedMaterial: {fileID: -3728109833694233984, guid: 589de235d2aeb874081becade69fa458, type: 2}
@@ -391,8 +391,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 27
+  m_fontSizeBase: 27
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -401,9 +401,9 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -108.02927, w: -24.46428}
+  m_margin: {x: 0, y: 0, z: -108.02927, w: -15.009842}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -457,7 +457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 134, y: 12}
+  m_AnchoredPosition: {x: 134, y: 23}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1228946150
@@ -713,7 +713,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 134, y: 67}
+  m_AnchoredPosition: {x: 134, y: 68}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &1462041475
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -847,7 +847,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44cca509b76a21545a48c594e341d3c9, type: 3}
   SFXList:
   - {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 0cd3f858410dc27498c15dba1b886e01, type: 3}
   - {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
   - {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   - {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
