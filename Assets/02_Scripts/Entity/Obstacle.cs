@@ -14,6 +14,10 @@ public class Obstacle : MonoBehaviour, IObstacle
     [SerializeField] private bool useCenterLane = true;
     [SerializeField] private bool useRightLane = false;
 
+    [SerializeField] private float leftLanePosition = -4f;  // 왼쪽 레인의 X 위치
+    [SerializeField] private float centerLanePosition = 0f; // 중앙 레인의 X 위치
+    [SerializeField] private float rightLanePosition = 4f;  // 오른쪽 레인의 X 위치
+
     private int[] _lanes = new int[0];
     private int _activeLaneCount = 0;
 
@@ -52,6 +56,7 @@ public class Obstacle : MonoBehaviour, IObstacle
     {
         boxCollider.isTrigger = true;
         UpdateColliderShape();
+        UpdatePositionBasedOnLanes();
     }
 
     private void OnValidate()
@@ -69,6 +74,55 @@ public class Obstacle : MonoBehaviour, IObstacle
         {
             UpdateColliderShape();
         }
+
+        // 에디터에서 값 변경 시 위치 업데이트
+        UpdatePositionBasedOnLanes();
+    }
+
+    /// <summary>
+    /// 선택된 레인에 따라 오브젝트의 position.x 바꿔줌
+    /// </summary>
+    private void UpdatePositionBasedOnLanes()
+    {
+        // 선택된 레인이 없는 경우
+        if (_lanes.Length == 0)
+        {
+            return;
+        }
+
+        // 여러 레인이 선택된 경우 첫 번째 레인의 위치로 설정
+        // 또는 사용자 요구에 따라 레인들의 중간 위치로 설정할 수도 있음
+        Vector3 currentPosition = transform.position;
+
+        if (useLeftLane && !useCenterLane && !useRightLane)
+        {
+            currentPosition.x = leftLanePosition;
+        }
+        else if (!useLeftLane && useCenterLane && !useRightLane)
+        {
+            currentPosition.x = centerLanePosition;
+        }
+        else if (!useLeftLane && !useCenterLane && useRightLane)
+        {
+            currentPosition.x = rightLanePosition;
+        }
+        else if (_lanes.Length > 1)
+        {
+            // 여러 레인이 선택된 경우, 선택된 모든 레인의 평균 위치를 사용
+            float totalX = 0f;
+            int count = 0;
+
+            if (useLeftLane) { totalX += leftLanePosition; count++; }
+            if (useCenterLane) { totalX += centerLanePosition; count++; }
+            if (useRightLane) { totalX += rightLanePosition; count++; }
+
+            if (count > 0)
+            {
+                currentPosition.x = totalX / count;
+            }
+        }
+
+        transform.position = currentPosition;
     }
 
     /// <summary>
@@ -82,7 +136,6 @@ public class Obstacle : MonoBehaviour, IObstacle
         if (useCenterLane) lanesList.Add(0);
         if (useRightLane) lanesList.Add(-1);
 
-        // 레인이 하나도 선택되지 않은 경우, 기본으로 중앙 레인 사용
         if (lanesList.Count == 0)
         {
             lanesList.Add(0);
@@ -124,6 +177,7 @@ public class Obstacle : MonoBehaviour, IObstacle
 
         UpdateLanesFromBooleans();
         UpdateColliderShape();
+        UpdatePositionBasedOnLanes();
     }
 
 
