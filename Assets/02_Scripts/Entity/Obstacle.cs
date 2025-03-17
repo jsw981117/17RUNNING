@@ -61,10 +61,8 @@ public class Obstacle : MonoBehaviour, IObstacle
 
     private void OnValidate()
     {
-        // 에디터에서 값 변경 시 레인 배열 업데이트
         UpdateLanesFromBooleans();
 
-        // 에디터에서 값 변경 시 콜라이더 업데이트
         if (boxCollider == null)
         {
             boxCollider = GetComponent<BoxCollider>();
@@ -75,7 +73,6 @@ public class Obstacle : MonoBehaviour, IObstacle
             UpdateColliderShape();
         }
 
-        // 에디터에서 값 변경 시 위치 업데이트
         UpdatePositionBasedOnLanes();
     }
 
@@ -84,14 +81,11 @@ public class Obstacle : MonoBehaviour, IObstacle
     /// </summary>
     private void UpdatePositionBasedOnLanes()
     {
-        // 선택된 레인이 없는 경우
         if (_lanes.Length == 0)
         {
             return;
         }
 
-        // 여러 레인이 선택된 경우 첫 번째 레인의 위치로 설정
-        // 또는 사용자 요구에 따라 레인들의 중간 위치로 설정할 수도 있음
         Vector3 currentPosition = transform.position;
 
         if (useLeftLane && !useCenterLane && !useRightLane)
@@ -108,7 +102,6 @@ public class Obstacle : MonoBehaviour, IObstacle
         }
         else if (_lanes.Length > 1)
         {
-            // 여러 레인이 선택된 경우, 선택된 모든 레인의 평균 위치를 사용
             float totalX = 0f;
             int count = 0;
 
