@@ -5,12 +5,14 @@ using UnityEngine.InputSystem;
 
 public class SpeedPotion : Potion
 {
-
+   
     public override void Use(GameObject game)
     {
 
         PlayerManager.Instance.PlayerCondition.SpeedUp();
-    
+
+
+
     }
 
 
