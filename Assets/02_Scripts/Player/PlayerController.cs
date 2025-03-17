@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
 
     Rigidbody _rigidbody;
+    Animator _animator;
 
     //플레이어 rigidbody , 중력가속도 수정하면 이 함수를 호출.
     private void CalculateJumpPower()
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponentInChildren<Animator>();
         PlayerManager.Instance.PlayerController = this;
     }
     private void Start()
@@ -83,15 +85,19 @@ public class PlayerController : MonoBehaviour
             if (isSliding)
             {
                 motionState = PlayerMotionState.Slide;
+                _animator.SetBool("IsSlide", true);
             }
             else
             {
                 motionState = PlayerMotionState.Run;
+                _animator.SetBool("IsSlide", false);
             }
+            _animator.SetBool("IsJump", false);
         }
         else
         {
             motionState = PlayerMotionState.Jump;
+            _animator.SetBool("IsJump", true);
         }
     }
 

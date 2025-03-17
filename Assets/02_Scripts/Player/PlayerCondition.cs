@@ -12,6 +12,9 @@ public class PlayerCondition : MonoBehaviour
     public bool isInvincible = false; //무적효과인가?
     bool isCorotuine = false;
     Color playerColor;
+    
+    int playerLane { get => PlayerManager.Instance.PlayerController.lane; }
+    PlayerMotionState playerMotionState { get => PlayerManager.Instance.PlayerController.motionState; }
     private void Awake()
     {
       
@@ -34,8 +37,20 @@ public class PlayerCondition : MonoBehaviour
         }
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
-            if (!isInvincible) // 무적효과가 아닐때
-                TakeDamage(1);
+            IObstacle obstacle = other.GetComponent<IObstacle>();
+            if (obstacle.lane == playerLane)
+            {
+                foreach (var v in obstacle.passable)
+                {
+                    if (v != playerMotionState)
+                    {
+                        //지나갈 수 없는 상태.
+                        if(!isInvincible)
+                            TakeDamage(1);
+                        break;
+                    }
+                }
+            }
         }
 
        /* if (other.gameObject.CompareTag("Enemy"))
