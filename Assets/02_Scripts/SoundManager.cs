@@ -70,12 +70,12 @@ public class SoundManager : MonoBehaviour
     // SFX
     public void PlaySFX(SFX sfxIdx)
     {
-        if ((int)sfxIdx == 1)       // 슬라이드할 때? 어떻게 동작하는 지 확인 후 맞춰서 수정
-        {
-            audioSFX.clip = SFXList[(int)sfxIdx];
-            audioSFX.Play();
-        }
-        else
+        //if ((int)sfxIdx == 1)       // 슬라이드할 때? 어떻게 동작하는 지 확인 후 맞춰서 수정
+        //{
+        //    audioSFX.clip = SFXList[(int)sfxIdx];
+        //    audioSFX.Play();
+        //}
+        //else
             audioSFX.PlayOneShot(SFXList[(int)sfxIdx]);
     }
     public void StopSFX()

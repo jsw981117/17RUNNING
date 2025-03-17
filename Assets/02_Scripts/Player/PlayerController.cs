@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour
         if (context.started && motionState != PlayerMotionState.Jump)
         {
             Jump();
+            SoundManager.instance.PlaySFX(SFX.JUMP);
         }
     }
     public void OnSlideInput(InputAction.CallbackContext context)
@@ -200,6 +201,7 @@ public class PlayerController : MonoBehaviour
         {
             isSliding = true;
             Slide();
+            SoundManager.instance.PlaySFX(SFX.SLIDE);
         }
         else if (context.canceled)
         {

@@ -25,6 +25,7 @@ public class PauseUI : MonoBehaviour
 
     public void TogglePause()
     {
+        SoundManager.instance.PlaySFX(SFX.BUTTON);
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0f : 1f;
 

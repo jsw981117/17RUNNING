@@ -32,6 +32,7 @@ public class PlayerCondition : MonoBehaviour
         Potion potion = other.GetComponent<Potion>();
         if (potion != null)
         {
+            SoundManager.instance.PlaySFX(SFX.ITEM);
             Destroy(other.gameObject);
             potion.Use(gameObject); // 다형성 포션 호출 (스피드업, 체력)
         }
@@ -74,6 +75,7 @@ public class PlayerCondition : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        SoundManager.instance.PlaySFX(SFX.CRASH);
 
         if (currentHealth < 0) currentHealth = 0;
 
@@ -88,6 +90,7 @@ public class PlayerCondition : MonoBehaviour
     private void Die()
     {
         Debug.Log(" 플레이어 사망!");
+        SoundManager.instance.PlaySFX(SFX.GAMEOVER);
         // 게임 오버 처리 가능 (씬 리로드, UI 표시 등)
         UIManager.Instance.ShowGameOverUI();
         Destroy(gameObject);
