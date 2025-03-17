@@ -7,6 +7,9 @@ public class PlayerCondition : MonoBehaviour
     float accel = 5f;
     float originSpeed;
     bool isAccel = false;
+
+    int playerLane { get => PlayerManager.Instance.PlayerController.lane; }
+    PlayerMotionState playerMotionState { get => PlayerManager.Instance.PlayerController.motionState; }
     private void Awake()
     {
         PlayerManager.Instance.PlayerCondition = this;
@@ -27,7 +30,19 @@ public class PlayerCondition : MonoBehaviour
         }
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
-            TakeDamage(1);
+            IObstacle obstacle = other.GetComponent<IObstacle>();
+            if (obstacle.lane == playerLane)
+            {
+                foreach (var v in obstacle.passable)
+                {
+                    if (v != playerMotionState)
+                    {
+                        //지나갈 수 없는 상태.
+                        TakeDamage(1);
+                        break;
+                    }
+                }
+            }
         }
     }
 
