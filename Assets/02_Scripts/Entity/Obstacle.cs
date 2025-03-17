@@ -125,9 +125,9 @@ public class Obstacle : MonoBehaviour, IObstacle
     {
         List<int> lanesList = new List<int>();
 
-        if (useLeftLane) lanesList.Add(1);
+        if (useLeftLane) lanesList.Add(-1);
         if (useCenterLane) lanesList.Add(0);
-        if (useRightLane) lanesList.Add(-1);
+        if (useRightLane) lanesList.Add(1);
 
         if (lanesList.Count == 0)
         {
