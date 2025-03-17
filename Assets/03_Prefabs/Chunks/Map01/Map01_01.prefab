@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle_Jump01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4758223819012988577, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5497636872298966898, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -359,6 +363,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7776583876409892777, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: useRightLane
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776583876409892777, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: useCenterLane
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -381,9 +393,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle_Jump01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4758223819012988577, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5497636872298966898, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5497636872298966898, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -419,6 +435,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5497636872298966898, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776583876409892777, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: useRightLane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776583876409892777, guid: 0d423b8ee76d9894c98f364086097e3a, type: 3}
+      propertyPath: useCenterLane
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -697,7 +721,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3547176401750352701, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 3547176401750352701, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -735,9 +759,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6366233942407445227, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7498680093560764195, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_Name
       value: Obstacle_Slide01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008350621429750431, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: useLeftLane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008350621429750431, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: useCenterLane
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -961,7 +997,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3547176401750352701, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3547176401750352701, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -999,9 +1035,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6366233942407445227, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7498680093560764195, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
       propertyPath: m_Name
       value: Obstacle_Slide01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008350621429750431, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: useRightLane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008350621429750431, guid: 67f7ea1d7a26ca94ab46103e332936e1, type: 3}
+      propertyPath: useCenterLane
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
