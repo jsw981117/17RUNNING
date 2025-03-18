@@ -18,7 +18,8 @@
 
 
 ### 신소현
-
+  - SoundManager를 통해 BGM, SFX를 관리하고, 각 상황에 맞는 사운드를 출력할 수 있도록 구현
+  - 업적 리스트를 생성하고, 리스트를 AchievementManager에서 받아 Json으로 업적 달성 상황 저장 / 로드가 가능하도록 구현
 
 ### 박호준
   - InputSystem 을 활용해 플레이어 조작
