@@ -174,65 +174,65 @@ public class Obstacle : MonoBehaviour, IObstacle
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // 플레이어 레이어인지 확인하고 컴포넌트 가져오고
-        // PlayerMotionState를 확인해서 통과 가능한지 체크
-        // 통과 가능하면 통과되고 아니면 데미지
-        if (((1 << other.gameObject.layer) & playerLayer) != 0)
-        {
-            PlayerController playerController = other.GetComponent<PlayerController>();
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    // 플레이어 레이어인지 확인하고 컴포넌트 가져오고
+    //    // PlayerMotionState를 확인해서 통과 가능한지 체크
+    //    // 통과 가능하면 통과되고 아니면 데미지
+    //    if (((1 << other.gameObject.layer) & playerLayer) != 0)
+    //    {
+    //        PlayerController playerController = other.GetComponent<PlayerController>();
 
-            if (playerController != null)
-            {
-                bool isInSameLane = false;
-                foreach (int obstacleLane in _lanes)
-                {
-                    if (obstacleLane == playerController.lane)
-                    {
-                        isInSameLane = true;
-                        break;
-                    }
-                }
+    //        if (playerController != null)
+    //        {
+    //            bool isInSameLane = false;
+    //            foreach (int obstacleLane in _lanes)
+    //            {
+    //                if (obstacleLane == playerController.lane)
+    //                {
+    //                    isInSameLane = true;
+    //                    break;
+    //                }
+    //            }
 
-                if (isInSameLane)
-                {
-                    PlayerMotionState currentPlayerState = playerController.motionState;
-                    bool canPass = false;
-                    foreach (PlayerMotionState state in _passableStates)
-                    {
-                        if (state == currentPlayerState)
-                        {
-                            canPass = true;
-                            break;
-                        }
-                    }
+    //            if (isInSameLane)
+    //            {
+    //                PlayerMotionState currentPlayerState = playerController.motionState;
+    //                bool canPass = false;
+    //                foreach (PlayerMotionState state in _passableStates)
+    //                {
+    //                    if (state == currentPlayerState)
+    //                    {
+    //                        canPass = true;
+    //                        break;
+    //                    }
+    //                }
 
-                    if (!canPass)
-                    {
-                        PlayerCondition playerCondition = other.GetComponent<PlayerCondition>();
-                        if (playerCondition != null)
-                        {
-                            playerCondition.TakeDamage(damage);
-                            OnObstacleHit();
-                        }
-                        else
-                        {
-                            Debug.LogError("PlayerCondition을 찾을 수 없습니다");
-                        }
-                    }
-                    else
-                    {
-                        OnObstaclePass();
-                    }
-                }
-                else
-                {
-                    Debug.Log("플레이어가 장애물과 다른 레인에 있습니다.");
-                }
-            }
-        }
-    }
+    //                if (!canPass)
+    //                {
+    //                    PlayerCondition playerCondition = other.GetComponent<PlayerCondition>();
+    //                    if (playerCondition != null)
+    //                    {
+    //                        playerCondition.TakeDamage(damage);
+    //                        OnObstacleHit();
+    //                    }
+    //                    else
+    //                    {
+    //                        Debug.LogError("PlayerCondition을 찾을 수 없습니다");
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    OnObstaclePass();
+    //                }
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("플레이어가 장애물과 다른 레인에 있습니다.");
+    //            }
+    //        }
+    //    }
+    //}
 
     protected virtual void OnObstacleHit()
     {
