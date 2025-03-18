@@ -23,8 +23,6 @@ public class Obstacle : MonoBehaviour, IObstacle
 
     [SerializeField] private LayerMask playerLayer;
 
-    [SerializeField] private int damage = 1;
-
     [Header("Collider Settings")]
     [SerializeField] private float laneWidth = 1.0f;
     [SerializeField] private float laneSpacing = 0.2f;
