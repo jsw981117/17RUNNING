@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+public class FollowCamera : MonoBehaviour // Summary * ë³´ê°„ì„ í†µí•´ ì¹´ë©”ë¼ ë¶€ë“œëŸ½ê²Œ ë”°ë¼ê°€ê¸° 
 {
-    public Transform player;  // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ
-    public Vector3 offset = new Vector3(0, 5, -8);  // Ä«¸Ş¶ó À§Ä¡ ¿ÀÇÁ¼Â
-    public float smoothSpeed = 5f;  // ºÎµå·¯¿î ÀÌµ¿ ¼Óµµ
+    public Transform player;  // í”Œë ˆì´ì–´ ìºë¦­í„°
+    public Vector3 offset = new Vector3(0, 5, -8);  // ì¹´ë©”ë¼ ìœ„ì¹˜ ì˜¤í”„ì…‹
+    public float smoothSpeed = 5f;  // ë¶€ë“œëŸ¬ìš´ ì´ë™ ì†ë„
 
     void LateUpdate()
     {
         
         Vector3 targetPosition = player.position + offset;
 
-        // ºÎµå·´°Ô µû¶ó°¡±â
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime); // º¸°£ 
+        // ë¶€ë“œëŸ½ê²Œ ë”°ë¼ê°€ê¸°
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime); // ë³´ê°„ 
 
-        // Ä³¸¯ÅÍ ¹æÇâ µû¶ó°¡±â
+        // ìºë¦­í„° ë°©í–¥ ë”°ë¼ê°€ê¸°
         transform.LookAt(player.position + Vector3.forward * 5f);
     }
 }
