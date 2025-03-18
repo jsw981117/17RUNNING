@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +22,11 @@ public class UIManager : MonoBehaviour
 
     public bool isGameOver = false; // 게임 오버 여부
     private int highScore = 0; // 최고 점수 변수
+
+    [SerializeField] private GameObject achievePanel; // 업적 패널
+    [SerializeField] private TextMeshProUGUI achieveTitleTxt; // 업적 제목 txt
+    [SerializeField] private TextMeshProUGUI achieveDescTxt; // 업적 설명 txt
+
 
     private void Awake()
     {
@@ -58,6 +65,10 @@ public class UIManager : MonoBehaviour
                 PlayerPrefs.SetInt("HighScore", highScore); // 최고 점수 저장
                 PlayerPrefs.Save();
             }
+
+            // 점수 업적 호출
+            if (score == 1000)
+                AchievementManager.instance.Achieve(2);
         }
     }
 
@@ -93,5 +104,18 @@ public class UIManager : MonoBehaviour
 
             Debug.Log("게임 오버! 최고 점수 표시");
         }
+    }
+
+    public IEnumerator SetAchievementUI(int listIdx)
+    {
+        List<Achievement> achievementData = AchievementManager.instance.achievementData;
+
+        achievePanel.gameObject.SetActive(true);
+        achieveTitleTxt.text = achievementData[listIdx].Name.ToString();
+        achieveDescTxt.text = achievementData[listIdx].Description.ToString();
+
+        yield return new WaitForSeconds(3f);
+
+        achievePanel.gameObject.SetActive(false);
     }
 }

@@ -27,12 +27,20 @@ public class GameOverUI : MonoBehaviour
     public void RestartGame()
     {
         // Summary: 현재 씬을 다시 로드하여 게임 재시작
+        SoundManager.instance.PlaySFX(SFX.BUTTON);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SoundManager.instance.StopBGM();
+        SoundManager.instance.PlayBGM(BGM.GAME);
     }
 
     public void GoToMainMenu()
     {
         // Summary: 메인 메뉴 씬으로 이동 (씬 이름은 프로젝트에 맞게 변경)
+        SoundManager.instance.PlaySFX(SFX.BUTTON);
+
         SceneManager.LoadScene("MainScene");
+        SoundManager.instance.StopBGM();
+        SoundManager.instance.PlayBGM(BGM.TITLE);
     }
 }

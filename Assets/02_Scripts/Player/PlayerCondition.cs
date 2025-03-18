@@ -13,6 +13,7 @@ public class PlayerCondition : MonoBehaviour
     bool isCorotuine = false;
     SkinnedMeshRenderer[] skinnedRenderers;
     Color playerColor;
+    int itemObtainCount = 0; // 아이템 획득 카운트
     
     int playerLane { get => PlayerManager.Instance.PlayerController.lane; }
     PlayerMotionState playerMotionState { get => PlayerManager.Instance.PlayerController.motionState; }
@@ -34,9 +35,16 @@ public class PlayerCondition : MonoBehaviour
         Potion potion = other.GetComponent<Potion>();
         if (potion != null)
         {
-            //SoundManager.instance.PlaySFX(SFX.ITEM);
+            SoundManager.instance.PlaySFX(SFX.ITEM);
             Destroy(other.gameObject);
             potion.Use(); // 다형성 포션 호출 (스피드업, 체력)
+
+            // 아이템 5개 획득 업적 호출
+            itemObtainCount++;
+            if (itemObtainCount < 5)
+                return;
+            else
+                AchievementManager.instance.Achieve(3);
         }
         if (other.CompareTag("Obstacle")) // 장애물과 충돌 시
         {
@@ -82,6 +90,7 @@ public class PlayerCondition : MonoBehaviour
         if (currentHealth < 0) currentHealth = 0;
 
         UIManager.Instance.UpdateHealthUI(currentHealth); // 체력 UI 갱신
+        AchievementManager.instance.Achieve(1); // 충돌 업적 호출
 
         if (currentHealth <= 0)
         {
@@ -92,6 +101,7 @@ public class PlayerCondition : MonoBehaviour
     private void Die()
     {
         Debug.Log(" 플레이어 사망!");
+        SoundManager.instance.StopBGM();
         SoundManager.instance.PlaySFX(SFX.GAMEOVER);
         // 게임 오버 처리 가능 (씬 리로드, UI 표시 등)
         UIManager.Instance.ShowGameOverUI();
