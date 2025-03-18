@@ -95,6 +95,7 @@ public class PlayerCondition : MonoBehaviour
         SoundManager.instance.PlaySFX(SFX.GAMEOVER);
         // 게임 오버 처리 가능 (씬 리로드, UI 표시 등)
         UIManager.Instance.ShowGameOverUI();
+        StartCoroutine(PlayerManager.Instance.PlayerController.DieCoroutine());
     }
 
 

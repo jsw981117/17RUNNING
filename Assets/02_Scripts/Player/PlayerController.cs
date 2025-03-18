@@ -243,4 +243,19 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    public IEnumerator DieCoroutine()
+    { 
+        float elapsed = 0f;
+        float transitionTime = 0.4f;
+        float movspd = moveSpeed;
+        while (elapsed < transitionTime)
+        {
+            elapsed += Time.deltaTime;
+            moveSpeed = Mathf.Lerp(movspd, 0f, elapsed / transitionTime);
+            yield return null;
+        }
+        moveSpeed = 0f;
+        _animator.SetBool("IsDead", true);
+    }
 }
