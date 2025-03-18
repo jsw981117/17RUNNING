@@ -62,6 +62,9 @@ public class LoadingManager : MonoBehaviour
                 }
 
                 operation.allowSceneActivation = true;
+
+                SoundManager.instance.StopBGM();
+                SoundManager.instance.PlayBGM(BGM.GAME);
             }
 
             yield return null;

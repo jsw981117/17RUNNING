@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 // BGM 종류
 public enum BGM
@@ -70,12 +67,20 @@ public class SoundManager : MonoBehaviour
     // SFX
     public void PlaySFX(SFX sfxIdx)
     {
-        //if ((int)sfxIdx == 1)       // 슬라이드할 때? 어떻게 동작하는 지 확인 후 맞춰서 수정
-        //{
-        //    audioSFX.clip = SFXList[(int)sfxIdx];
-        //    audioSFX.Play();
-        //}
-        //else
+        if ((int)sfxIdx == 1)       // SFX.SLIDE
+        {
+            audioSFX.pitch = 0.35f;
+            audioSFX.PlayOneShot(SFXList[(int)sfxIdx]);
+        }
+        else if ((int)sfxIdx == 2)  // SFX.CRASH
+        {
+            audioSFX.volume = 0.7f;
+            audioSFX.PlayOneShot(SFXList[(int)sfxIdx]);
+
+        }
+        else
+            audioSFX.pitch = 1f;
+            audioSFX.volume = 0.5f;
             audioSFX.PlayOneShot(SFXList[(int)sfxIdx]);
     }
     public void StopSFX()
