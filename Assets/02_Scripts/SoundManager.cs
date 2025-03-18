@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 // BGM 종류
 public enum BGM
 {
