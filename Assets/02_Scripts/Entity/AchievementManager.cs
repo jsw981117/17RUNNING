@@ -57,7 +57,7 @@ public class AchievementManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        DeleteData();       // test용. 마무리할 때 주석 처리 후 커밋
+        //DeleteData();       // test용
 
         string jsonPath = Application.persistentDataPath + "/AchievementData.txt";
         if (File.Exists(jsonPath))
@@ -99,7 +99,7 @@ public class AchievementManager : MonoBehaviour
         }
         else
         {
-            //StartCoroutine(UIManager.Instance.SetAchievementUI(listIdx));     // UIManager에 옮긴 후 주석 해제
+            StartCoroutine(UIManager.Instance.SetAchievementUI(listIdx));     // UIManager에 옮긴 후 주석 해제
             SoundManager.instance.PlaySFX(SFX.ACHIEVED);
             achievementData[listIdx].IsAchieved = true;
             SaveAchievementData();
