@@ -157,8 +157,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44cca509b76a21545a48c594e341d3c9, type: 3}
   SFXList:
   - {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  - {fileID: 8300000, guid: 0cd3f858410dc27498c15dba1b886e01, type: 3}
-  - {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
+  - {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+  - {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
   - {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
   - {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   - {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
