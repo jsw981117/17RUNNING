@@ -1,52 +1,46 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    // Summary: 게임 UI를 관리하는 클래스
+    // - 점수 및 최고 점수 UI 업데이트
+    // - 체력 UI 업데이트
+    // - 일시정지 및 게임 오버 UI 제어
+    // - Singleton 패턴 적용
+
+    public static UIManager Instance; // 싱글톤 인스턴스
 
     public TextMeshProUGUI scoreText; // 현재 점수 UI
     public TextMeshProUGUI highScoreText; // 최고 점수 UI
-    public HealthUI healthUI; // HealthUI 참조
-    public PauseUI pauseUI;
-    public GameOverUI gameOverUI;
+    public HealthUI healthUI; // 체력 UI 참조
+    public PauseUI pauseUI; // 일시정지 UI 참조
+    public GameOverUI gameOverUI; // 게임 오버 UI 참조
 
-    public bool isGameOver = false; // 게임 오버 상태 변수
+    public bool isGameOver = false; // 게임 오버 여부
     private int highScore = 0; // 최고 점수 변수
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 이동 시 유지
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // Summary: 싱글톤 패턴 적용 (하나의 UIManager만 유지)
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     private void Start()
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0); // 저장된 최고 점수 불러오기
-        CheckSceneForHighScore(); // 씬에 따라 최고 점수 UI 표시 여부 결정
-    }
-
-    private void Update()
-    {
-        // 씬이 바뀌었을 때 최고 점수 UI 표시 여부 확인
-        CheckSceneForHighScore();
+        // Summary: 저장된 최고 점수 불러오기 및 초기 UI 설정
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.gameObject.SetActive(false); // 게임 시작 시 최고 점수 UI 숨김
     }
 
     public void UpdateScoreUI(int score)
     {
-        if (!isGameOver) // 게임 오버 상태면 점수 업데이트 중단
+        // Summary: 점수 UI 업데이트 및 최고 점수 갱신
+        if (!isGameOver)
         {
             scoreText.text = "Score : " + score.ToString("D5");
 
-            // 최고 점수 갱신
             if (score > highScore)
             {
                 highScore = score;
@@ -58,6 +52,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealthUI(int health)
     {
+        // Summary: 체력 UI 업데이트
         if (healthUI != null)
         {
             healthUI.UpdateHealth(health);
@@ -66,6 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePauseUI(bool isPaused)
     {
+        // Summary: 일시정지 UI 업데이트
         if (pauseUI != null)
         {
             pauseUI.pausePanel.SetActive(isPaused);
@@ -74,32 +70,17 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameOverUI()
     {
+        // Summary: 게임 오버 UI 표시 및 최고 점수 갱신
         if (gameOverUI != null)
         {
-            isGameOver = true; // 게임 오버 상태 설정
+            isGameOver = true;
             gameOverUI.ShowGameOver();
 
-            // 게임 오버 시 최고 점수 UI 활성화
+            // 최고 점수 UI 활성화 및 갱신
             highScoreText.gameObject.SetActive(true);
             highScoreText.text = "Top : " + highScore.ToString("D5");
 
             Debug.Log("게임 오버! 최고 점수 표시");
-        }
-    }
-
-    private void CheckSceneForHighScore()
-    {
-        string currentScene = SceneManager.GetActiveScene().name;
-
-        // 게임 오버 화면이거나 특정 씬에서는 항상 최고 점수 표시
-        if (currentScene == "MainScene" || currentScene == "GameOverScene")
-        {
-            highScoreText.gameObject.SetActive(true);
-            highScoreText.text = "Top : " + highScore.ToString("D5");
-        }
-        else if (!isGameOver) // 게임 진행 중에는 숨김
-        {
-            highScoreText.gameObject.SetActive(false);
         }
     }
 }
