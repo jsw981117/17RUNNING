@@ -233,16 +233,4 @@ public class Obstacle : MonoBehaviour, IObstacle
     //        }
     //    }
     //}
-
-    protected virtual void OnObstacleHit()
-    {
-        // 충돌 효과 (VFX, SFX 등)
-        Debug.Log($"플레이어가 장애물에 충돌했습니다");
-    }
-
-    protected virtual void OnObstaclePass()
-    {
-        // 통과 시 효과. 아마 아무것도 안 할 듯, 디버그 로그만 체크
-        Debug.Log($"플레이어가 장애물을 통과했습니다");
-    }
 }
