@@ -100,33 +100,24 @@ public class ChunkLoadManager : MonoBehaviour
     /// </summary>
     private void UpdateLevelProgression()
     {
-        // 이미 최대 레벨이면 시간 업데이트만 하고 리턴
         if (currentLevel >= Mathf.Min(maxLevel, chunkLevels.Count - 1))
         {
             survivalTime += Time.deltaTime;
             return;
         }
 
-        // 생존 시간 업데이트
         survivalTime += Time.deltaTime;
 
-        // 다음 레벨업 시간에 도달했는지 체크
         if (survivalTime >= nextLevelUpTime)
         {
-            // 레벨 증가
             int newLevel = Mathf.Min(currentLevel + 1, Mathf.Min(maxLevel, chunkLevels.Count - 1));
 
-            // 레벨이 실제로 변경되었을 때만 ChangeLevel 호출
             if (newLevel != currentLevel)
             {
                 ChangeLevel(newLevel);
             }
 
-            // 다음 레벨업 시간 계산
             nextLevelUpTime = survivalTime + timeToLevelUp;
-
-            // 레벨 변경 알림 (필요하면 이벤트로 변경 가능)
-            Debug.Log($"레벨 증가: {currentLevel} (생존 시간: {survivalTime:F1}초)");
         }
     }
 
