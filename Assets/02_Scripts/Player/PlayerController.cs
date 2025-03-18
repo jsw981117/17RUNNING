@@ -160,13 +160,9 @@ public class PlayerController : MonoBehaviour
     {
         float elapsed = 0f;
 
-        // lane * 벌리는 거리 => 목표 위치
-        //float target = lane * laneDistance;
-
         float spd = laneDistance / laneChangeTime;
         while (elapsed < laneChangeTime)
         {
-            //이 로직 수정 필요
             transform.position += transform.right * spd * direction * Time.deltaTime;
             elapsed += Time.deltaTime;
             yield return null;
