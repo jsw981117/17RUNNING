@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthPotion : Potion
 {
     
-    public override void Use(GameObject potion)
+    public override void Use() // Summary * Potion 상속받고 Condition에서 구현한 Heal 호출
     {
 
         PlayerManager.Instance.PlayerCondition.Heal(); // Player에서 호출 
