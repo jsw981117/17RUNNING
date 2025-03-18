@@ -160,13 +160,9 @@ public class PlayerController : MonoBehaviour
     {
         float elapsed = 0f;
 
-        // lane * 벌리는 거리 => 목표 위치
-        //float target = lane * laneDistance;
-
         float spd = laneDistance / laneChangeTime;
         while (elapsed < laneChangeTime)
         {
-            //이 로직 수정 필요
             transform.position += transform.right * spd * direction * Time.deltaTime;
             elapsed += Time.deltaTime;
             yield return null;
@@ -242,5 +238,20 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public IEnumerator DieCoroutine()
+    { 
+        float elapsed = 0f;
+        float transitionTime = 0.4f;
+        float movspd = moveSpeed;
+        while (elapsed < transitionTime)
+        {
+            elapsed += Time.deltaTime;
+            moveSpeed = Mathf.Lerp(movspd, 0f, elapsed / transitionTime);
+            yield return null;
+        }
+        moveSpeed = 0f;
+        _animator.SetBool("IsDead", true);
     }
 }
