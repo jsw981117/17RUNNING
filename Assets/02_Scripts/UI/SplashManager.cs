@@ -12,6 +12,6 @@ public class SplashManager : MonoBehaviour
     IEnumerator LoadNextScene()
     {
         yield return new WaitForSeconds(3f); // 3초 동안 로고 표시
-        SceneManager.LoadScene("LoadingScene"); // 로딩 씬으로 이동
+        SceneManager.LoadScene("MainScene"); // 로딩 씬으로 이동
     }
 }

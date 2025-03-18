@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,14 +17,27 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 이동 시 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0); // 저장된 최고 점수 불러오기
-        highScoreText.gameObject.SetActive(false); // 게임 시작 시 최고 점수 숨김
+        CheckSceneForHighScore(); // 씬에 따라 최고 점수 UI 표시 여부 결정
+    }
+
+    private void Update()
+    {
+        // 씬이 바뀌었을 때 최고 점수 UI 표시 여부 확인
+        CheckSceneForHighScore();
     }
 
     public void UpdateScoreUI(int score)
@@ -70,6 +84,22 @@ public class UIManager : MonoBehaviour
             highScoreText.text = "Top : " + highScore.ToString("D5");
 
             Debug.Log("게임 오버! 최고 점수 표시");
+        }
+    }
+
+    private void CheckSceneForHighScore()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // 게임 오버 화면이거나 특정 씬에서는 항상 최고 점수 표시
+        if (currentScene == "MainScene" || currentScene == "GameOverScene")
+        {
+            highScoreText.gameObject.SetActive(true);
+            highScoreText.text = "Top : " + highScore.ToString("D5");
+        }
+        else if (!isGameOver) // 게임 진행 중에는 숨김
+        {
+            highScoreText.gameObject.SetActive(false);
         }
     }
 }
