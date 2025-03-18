@@ -17,6 +17,13 @@ public class ChunkLoadManager : MonoBehaviour
     [SerializeField] private float defaultChunkLength = 100f; // 청크 길이 기본값
     [SerializeField] private float recycleDistance = 100f; // 플레이어와의 거리가 이 값보다 크면 청크 재활용
 
+    [Header("Level Progression")]
+    [SerializeField] private bool autoLevelProgression = true; // 레벨이 시간에 따라 증가할 것인지(true면 증가)
+    [SerializeField] private float timeToLevelUp = 60f; // 레벨이 증가하는데 필요한 시간(초)
+    [SerializeField] private int maxLevel = 1; // 최대 레벨
+    private float survivalTime = 0f; // 현재 생존 시간
+    private float nextLevelUpTime = 0f; // 다음 레벨업 시간
+
     // 현재 레벨의 청크 풀 (재사용할 수 있는 청크덜)
     private List<GameObject> chunkPool = new List<GameObject>();
 
@@ -45,6 +52,8 @@ public class ChunkLoadManager : MonoBehaviour
             return;
         }
         currentLevel = Mathf.Clamp(currentLevel, 0, chunkLevels.Count - 1);
+        survivalTime = 0f;
+        nextLevelUpTime = timeToLevelUp;
 
         InitializePrefabIndices(currentLevel);
         InitializeChunkPool();
@@ -59,6 +68,11 @@ public class ChunkLoadManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (autoLevelProgression)
+        {
+            UpdateLevelProgression();
+        }
+
         if (target.position.z > spawnZ - recycleDistance)
         {
             SpawnChunk();
@@ -79,6 +93,57 @@ public class ChunkLoadManager : MonoBehaviour
             SpawnChunk();
             needToSpawnNewChunk = false;
         }
+    }
+
+    /// <summary>
+    /// 생존 시간에 따른 레벨 증가 로직
+    /// </summary>
+    private void UpdateLevelProgression()
+    {
+        // 이미 최대 레벨이면 시간 업데이트만 하고 리턴
+        if (currentLevel >= Mathf.Min(maxLevel, chunkLevels.Count - 1))
+        {
+            survivalTime += Time.deltaTime;
+            return;
+        }
+
+        // 생존 시간 업데이트
+        survivalTime += Time.deltaTime;
+
+        // 다음 레벨업 시간에 도달했는지 체크
+        if (survivalTime >= nextLevelUpTime)
+        {
+            // 레벨 증가
+            int newLevel = Mathf.Min(currentLevel + 1, Mathf.Min(maxLevel, chunkLevels.Count - 1));
+
+            // 레벨이 실제로 변경되었을 때만 ChangeLevel 호출
+            if (newLevel != currentLevel)
+            {
+                ChangeLevel(newLevel);
+            }
+
+            // 다음 레벨업 시간 계산
+            nextLevelUpTime = survivalTime + timeToLevelUp;
+
+            // 레벨 변경 알림 (필요하면 이벤트로 변경 가능)
+            Debug.Log($"레벨 증가: {currentLevel} (생존 시간: {survivalTime:F1}초)");
+        }
+    }
+
+    /// <summary>
+    /// 현재 생존 시간 반환
+    /// </summary>
+    public float GetSurvivalTime()
+    {
+        return survivalTime;
+    }
+
+    /// <summary>
+    /// 레벨 증가 자동화 설정
+    /// </summary>
+    public void SetAutoLevelProgression(bool enable)
+    {
+        autoLevelProgression = enable;
     }
 
     /// <summary>
