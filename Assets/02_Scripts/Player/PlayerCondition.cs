@@ -11,14 +11,16 @@ public class PlayerCondition : MonoBehaviour
     bool isAccel = false; // 가속중인가?
     public bool isInvincible = false; //무적효과인가?
     bool isCorotuine = false;
+    SkinnedMeshRenderer[] skinnedRenderers;
     Color playerColor;
     
     int playerLane { get => PlayerManager.Instance.PlayerController.lane; }
     PlayerMotionState playerMotionState { get => PlayerManager.Instance.PlayerController.motionState; }
     private void Awake()
     {
-      
-        playerColor = gameObject.GetComponentInChildren<MeshRenderer>().material.color;
+        skinnedRenderers= gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        playerColor = skinnedRenderers[0].materials[0].color;
+
         PlayerManager.Instance.PlayerCondition = this;
     }
     private void Start()
@@ -146,20 +148,25 @@ public class PlayerCondition : MonoBehaviour
         // 주의 : Rendering Mode를 Transparent로 바꿀것
         bool isAlpha = false; // 투명도 체크
 
-        float time = 0f;
         while (isInvincible)
         {
-            if (isAlpha)
+            foreach (var renderer in skinnedRenderers)
             {
-                gameObject.GetComponentInChildren<MeshRenderer>().material.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
-                isAlpha = false;
+                // **여기서 material 여러 개 있을 수 있어서 for문 돌려줌**
+                Material[] mats = renderer.materials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    if (isAlpha)
+                        mats[i].color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.2f);
+                    else
+                        mats[i].color = playerColor;
+                }
             }
-            else
-            {
-                gameObject.GetComponentInChildren<MeshRenderer>().material.color = playerColor;
-                isAlpha = true; 
-            }
-          
+
+
+            isAlpha = !isAlpha;
+
+
             yield return new WaitForSeconds(0.2f);
         }
         gameObject.GetComponentInChildren<MeshRenderer>().material.color = playerColor; // 깜빡임이 끝나면 원래색으로
